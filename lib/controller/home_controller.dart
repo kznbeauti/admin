@@ -463,10 +463,12 @@ void setViewAllProducts(ViewAllModel value){
 
   Future<void> proceedToPay() async {
     showLoading();
-    final total = (subTotal - promotionObxValue.value) + townShipNameAndFee["fee"] as int;    try {
+    final total = subTotal + townShipNameAndFee["fee"] as int;    
+    try {
       final list = getUserOrderData();
       final _purchase = PurchaseModel(
          total: total,
+         promotionValue: promotionObxValue.value,
         dateTime: DateTime.now().toString(),
         id: Uuid().v1(),
         items: myCart
@@ -639,18 +641,12 @@ void setViewAllProducts(ViewAllModel value){
  
  //Loading Font to not take time when user in App to this font
   late ByteData oleoBold;
-  late ByteData oleoRegular;
-  late ByteData robotoLight;
-  late ByteData robotoBold;
-  late var image;
+  late ByteData cherryUnicode;
   @override
   void onInit() async {
     super.onInit();
     oleoBold = await rootBundle.load("fonts/OleoScriptSwashCaps-Bold.ttf");
-    oleoRegular =
-        await rootBundle.load("fonts/OleoScriptSwashCaps-Regular.ttf");
-    robotoLight = await rootBundle.load("fonts/Roboto-Light.ttf");
-    robotoBold = await rootBundle.load("fonts/Roboto-Bold.ttf");
+    cherryUnicode = await rootBundle.load("fonts/Cherry_Unicode.ttf");
     sharedPref = await SharedPreferences.getInstance();
     if (getUserOrderData().isNotEmpty) {
       checkOutStep.value = 1;

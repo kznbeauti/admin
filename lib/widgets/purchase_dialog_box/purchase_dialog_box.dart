@@ -7,11 +7,7 @@ import '../../model/real_purchase.dart';
 import '../order_print/user_order_print_view.dart';
 
 Widget purchaseDialogBox({
-  required int i,
-  required int total,
-  required int shipping,
-  required String township,
-  required List<PurchaseModel> list,
+  required PurchaseModel purchaseModel,
   required BuildContext context,
 }) {
   HomeController controller = Get.find();
@@ -21,6 +17,9 @@ Widget purchaseDialogBox({
   final responsiveFontSize10 = TextStyle(
     fontSize: 6,
   );
+  final total = purchaseModel.total - purchaseModel.deliveryTownshipInfo[1] as int;
+  final township = purchaseModel.deliveryTownshipInfo[0];
+  final shipping = purchaseModel.deliveryTownshipInfo[1];
   return Column(
     children: [
       Row(
@@ -28,7 +27,7 @@ Widget purchaseDialogBox({
         children: [
           // Text("Purchase Date"),
           Text(
-            "၀ယ်ယူခဲ့သော နေ့ရက် - ${DateTime.tryParse(list[i].dateTime)?.day}/${DateTime.tryParse(list[i].dateTime)?.month}/${DateTime.tryParse(list[i].dateTime)?.year}",
+            "၀ယ်ယူခဲ့သော နေ့ရက် - ${DateTime.tryParse(purchaseModel.dateTime)?.day}/${DateTime.tryParse(purchaseModel.dateTime)?.month}/${DateTime.tryParse(purchaseModel.dateTime)?.year}",
             style: responsiveFontSize14,
           ),
         ],
@@ -42,7 +41,7 @@ Widget purchaseDialogBox({
         children: [
           // Text("Name"),
           Text(
-            list[i].name,
+            purchaseModel.name,
             style: TextStyle(fontSize: 14),
           ),
         ],
@@ -55,7 +54,7 @@ Widget purchaseDialogBox({
         children: [
           // Text("Ph No."),
           Text(
-            "0${list[i].phone}",
+            "0${purchaseModel.phone}",
             style: TextStyle(fontSize: 14),
           ),
         ],
@@ -68,7 +67,7 @@ Widget purchaseDialogBox({
         children: [
           // Text("Email"),
           Text(
-            list[i].email,
+            purchaseModel.email,
             style: TextStyle(fontSize: 14),
           ),
         ],
@@ -83,7 +82,7 @@ Widget purchaseDialogBox({
           // Text("Address"),
           Expanded(
               child: Text(
-            list[i].address,
+            purchaseModel.address,
             style: TextStyle(fontSize: 14),
           )),
         ],
@@ -96,9 +95,9 @@ Widget purchaseDialogBox({
         height: 150,
         child: ListView.builder(
             padding: EdgeInsets.all(0),
-            itemCount: list[i].items.length,
+            itemCount: purchaseModel.items.length,
             itemBuilder: (_, o) {
-              final purchase = list[i].items[o];
+              final purchase = purchaseModel.items[o];
               return Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: Row(
@@ -149,7 +148,21 @@ Widget purchaseDialogBox({
               );
             }),
       ),
-      //Delivery Township
+      //Promotion Discount
+     purchaseModel.promotionValue > 0 ? Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "promotion လျှော့ငွေ",
+            style: responsiveFontSize14,
+          ),
+          Text(
+            "${purchaseModel.promotionValue} Ks",
+            style: responsiveFontSize14,
+          ),
+        ],
+      ) : const SizedBox(),
+      const SizedBox(height: 10),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -173,7 +186,7 @@ Widget purchaseDialogBox({
             style: responsiveFontSize14,
           ),
           Text(
-            "$total + Deli $shipping Ks",
+            "($total - ${purchaseModel.promotionValue}) + Deli $shipping Ks",
             style: responsiveFontSize14,
           ),
         ],
@@ -186,7 +199,7 @@ Widget purchaseDialogBox({
             onPressed: () {
               //Show BlueTooth Dialog..Box....
                Get.to(UserOrderPrintView(
-                 purchaseModel: list[i], 
+                 purchaseModel: purchaseModel, 
                  total: total, 
                  shipping: shipping, 
                  township: township,));

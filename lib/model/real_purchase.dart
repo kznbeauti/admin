@@ -16,6 +16,7 @@ class PurchaseModel with _$PurchaseModel {
     required String phone,
     required String address,
         required int total,
+        required int promotionValue,
     required List deliveryTownshipInfo,
     @JsonKey(nullable: true) String? bankSlipImage,
     required String dateTime,

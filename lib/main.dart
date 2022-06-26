@@ -135,6 +135,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: introScreen,
       getPages: routes,
+      theme: ThemeData.light().copyWith(primaryColor: homeIndicatorColor),
       defaultTransition: Transition.fade,
     );
   }

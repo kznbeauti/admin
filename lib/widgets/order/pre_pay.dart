@@ -44,12 +44,8 @@ class PrePay extends StatelessWidget {
                           radius: 5,
                           content: purchaseDialogBox(
                             context: context,
-                              i: i,
-                              total: total,
-                              shipping: shipping,
-                              township: townName,
-                              list: controller.purchcasesPrePay()),
-                        );
+                            purchaseModel: controller.purchcasesPrePay()[i],
+                        ));
                       },
                       title: Text(
                           "${controller.purchcasesPrePay()[i].name} 0${controller.purchcasesPrePay()[i].phone}"),

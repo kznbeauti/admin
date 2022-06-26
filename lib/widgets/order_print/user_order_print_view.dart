@@ -42,9 +42,7 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
     final pw.Document doc = pw.Document();
     HomeController _controller = Get.find();
     var oleBold = pw.Font.ttf(_controller.oleoBold);
-    var oleRegular = pw.Font.ttf(_controller.oleoRegular);
-    var robotoBold = pw.Font.ttf(_controller.robotoBold);
-    var robotoLight = pw.Font.ttf(_controller.robotoLight);
+    var cherryUnicode = pw.Font.ttf(_controller.cherryUnicode);
     var today = DateFormat("ddMMMy").format(DateTime.now());
     final byte = await rootBundle.load('assets/logo.png');
     final image = pw.MemoryImage(byte.buffer.asUint8List());
@@ -91,7 +89,7 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
                             textAlign: pw.TextAlign.center,
                             style: pw.TextStyle(
                               fontWeight: pw.FontWeight.bold,
-                              font: robotoBold,
+                              font: cherryUnicode,
                               fontSize: 8,
                             )),
 
@@ -99,7 +97,7 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
                             textAlign: pw.TextAlign.center,
                             style: pw.TextStyle(
                               fontWeight: pw.FontWeight.bold,
-                              font: robotoBold,
+                              font: cherryUnicode,
                               fontSize: 8,
                             )),
 
@@ -107,14 +105,14 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
                             textAlign: pw.TextAlign.center,
                             style: pw.TextStyle(
                               fontWeight: pw.FontWeight.bold,
-                              font: robotoBold,
+                              font: cherryUnicode,
                               fontSize: 8,
                             )),
                         pw.Text("Total",
                             textAlign: pw.TextAlign.center,
                             style: pw.TextStyle(
                               fontWeight: pw.FontWeight.bold,
-                              font: robotoBold,
+                              font: cherryUnicode,
                               fontSize: 8,
                             )),
                       ]),
@@ -132,7 +130,7 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
                                 item.itemName,
                                 textAlign: pw.TextAlign.left,
                                 style: pw.TextStyle(
-                                  font: robotoLight,
+                                  font: cherryUnicode,
                                   fontSize: 8,
                                 ),
                               )),
@@ -144,7 +142,7 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
                               maxLines: 1,
                               textAlign: pw.TextAlign.center,
                               style: pw.TextStyle(
-                                font: robotoLight,
+                                font: cherryUnicode,
                                 fontSize: 8,
                               ),
                             ),
@@ -155,7 +153,7 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
                                 "${item.discountPrice} Ks",
                                 textAlign: pw.TextAlign.center,
                                 style: pw.TextStyle(
-                                  font: robotoLight,
+                                  font: cherryUnicode,
                                   fontSize: 8,
                                 ),
                               )),
@@ -165,7 +163,7 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
                                 "${item.requirePoint} points",
                                 textAlign: pw.TextAlign.center,
                                 style: pw.TextStyle(
-                                  font: robotoLight,
+                                  font: cherryUnicode,
                                   fontSize: 8,
                                 ),
                               )),
@@ -175,20 +173,42 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
                                 "${item.price} Ks",
                                 textAlign: pw.TextAlign.center,
                                 style: pw.TextStyle(
-                                  font: robotoLight,
+                                  font: cherryUnicode,
                                   fontSize: 8,
                                 ),
                               )),
                           ],
-                          pw.Expanded(
+                          if(item.discountPrice! > 0)...[
+                            pw.Expanded(
                               child: pw.Text(
-                                "${(item.price) * (item.count)} Ks",
+                                "${item.discountPrice! * item.count} Ks",
                                 textAlign: pw.TextAlign.center,
                                 style: pw.TextStyle(
-                                  font: robotoLight,
+                                  font: cherryUnicode,
                                   fontSize: 8,
                                 ),
                               )),
+                          ]else if(item.requirePoint! > 0)...[
+                            pw.Expanded(
+                              child: pw.Text(
+                                "${item.requirePoint! * item.count} points",
+                                textAlign: pw.TextAlign.center,
+                                style: pw.TextStyle(
+                                  font: cherryUnicode,
+                                  fontSize: 8,
+                                ),
+                              )),
+                          ]else...[
+                            pw.Expanded(
+                              child: pw.Text(
+                                "${item.price * item.count} Ks",
+                                textAlign: pw.TextAlign.center,
+                                style: pw.TextStyle(
+                                  font: cherryUnicode,
+                                  fontSize: 8,
+                                ),
+                              )),
+                          ],
                         ],
                       ),
                     ],
@@ -230,6 +250,21 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
             ]),
             pw.Divider(
               borderStyle: pw.BorderStyle.solid,
+            ),
+            pw.SizedBox(
+              //height: 50,
+              child: pw.Row(children: [
+                pw.Expanded(child: pw.Text("")),
+                pw.Padding(
+                  padding: pw.EdgeInsets.only(right: 20),
+                  child: pw.Text(
+                    "Promotion လျှော့ငွေ  -${widget.purchaseModel.promotionValue} Ks",
+                    textAlign: pw.TextAlign.right,
+                    style: const pw.TextStyle(
+                      fontSize: 8,
+                    ),
+                  ),),
+              ]),
             ),
             pw.SizedBox(
               //height: 50,

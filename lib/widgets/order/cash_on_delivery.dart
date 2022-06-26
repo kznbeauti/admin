@@ -23,14 +23,6 @@ class CashOnDelivery extends StatelessWidget {
               "${DateTime.parse(controller.purchcasesCashOn()[i].dateTime).day}/${DateTime.parse(controller.purchcasesCashOn()[i].dateTime).month}/${DateTime.parse(controller.purchcasesCashOn()[i].dateTime).year}"),
           trailing: IconButton(
             onPressed: () {
-              int total = 0;
-              for (var item in controller.purchcasesCashOn()[i].items) {
-                if(item.discountPrice! > 0){
-                  total += item.discountPrice! * item.count;
-                }else if(!(item.requirePoint! > 0)){
-                  total += item.price * item.count;
-                }
-              }
 
               print(controller.purchcasesCashOn()[i].items.length);
 
@@ -40,11 +32,7 @@ class CashOnDelivery extends StatelessWidget {
                 radius: 5,
                 content: purchaseDialogBox(
                   context: context,
-                    i: i,
-                    total: total,
-                    shipping: shipping,
-                    township: townName,
-                    list: controller.purchcasesCashOn()),
+                  purchaseModel: controller.purchcasesCashOn()[i]),
               );
             },
             icon: Icon(Icons.info),

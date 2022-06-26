@@ -126,16 +126,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-      - family: OleoScriptSwashCaps
-        fonts:
-            - asset: fonts/OleoScriptSwashCaps-Bold.ttf
-            - asset: fonts/OleoScriptSwashCaps-Regular.ttf
-      - family: Roboto
-        fonts:
-            - asset: fonts/Roboto-Bold.ttf
-            - asset: fonts/Roboto-Regular.ttf
-            - asset: fonts/Roboto-Light.ttf
-            - asset: fonts/Roboto-Thin.ttf
+    - family: Cherry Unicode
+      fonts:
+        - asset: fonts/Cherry_Unicode.ttf
+    - family: OleoScriptSwashCaps
+      fonts:
+          - asset: fonts/OleoScriptSwashCaps-Bold.ttf
+    - family: Roboto
+      fonts:
+          - asset: fonts/Roboto-Bold.ttf  
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
