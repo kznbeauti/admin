@@ -53,7 +53,7 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
           return pw.ListView(children: [
             pw.SizedBox(height: 5),
             pw.Image(image, width: 80, height: 80),
-             pw.Text("Beauty",
+             pw.Text("Delux Beauti",
                  style: const pw.TextStyle(
                    fontSize: 8,
                  )),
@@ -258,7 +258,7 @@ class _UserOrderPrintViewState extends State<UserOrderPrintView> {
                 pw.Padding(
                   padding: pw.EdgeInsets.only(right: 20),
                   child: pw.Text(
-                    "Promotion လျှော့ငွေ  -${widget.purchaseModel.promotionValue} Ks",
+                    "Promotion Discount-${widget.purchaseModel.promotionValue} Ks",
                     textAlign: pw.TextAlign.right,
                     style: const pw.TextStyle(
                       fontSize: 8,

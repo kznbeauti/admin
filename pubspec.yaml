@@ -73,6 +73,7 @@ dependencies:
   google_sign_in: ^5.3.3
   pdf: ^3.8.1
   printing: ^5.6.4
+  colours: ^0.0.2
   
 dev_dependencies:
   hive_generator: ^1.1.2
@@ -84,9 +85,10 @@ dev_dependencies:
   flutter_launcher_icons: "^0.9.2"
 
 flutter_icons:
-  image_path: "assets/logo.png"
+  image_path: "assets/applogo.png"
   android: true
   ios: true
+  remove_alpha_ios: true
 
 
 

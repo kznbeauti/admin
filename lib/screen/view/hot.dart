@@ -17,7 +17,8 @@ class HotView extends StatelessWidget {
         itemCount: controller.hot().length,
         itemBuilder: (_, i) => GestureDetector(
           onTap: () {
-            controller.setSelectedItem(controller.hot()[i]);
+            // controller.setSelectedItem(controller.hot()[i]);
+            controller.setEditItem(controller.hot()[i]);
             Get.toNamed(detailScreen);
           },
           child: Card(
@@ -44,26 +45,23 @@ class HotView extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        "${controller.hot()[i].price}  Ks",
+                        "${controller.hot()[i].discountPrice}  Ks",
                         style: TextStyle(
                           color: homeIndicatorColor,
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
                       SizedBox(
                         height: 5,
                       ),
-                      Row(
-                        children: List.generate(
-                          5,
-                          (index) => Icon(
-                            Icons.star,
-                            size: 16,
-                            color: index <= (controller.getItems()[i].love ?? 0)
-                                ? homeIndicatorColor
-                                : Colors.grey,
-                          ),
+                      Text(
+                        "${controller.hot()[i].price}  Ks",
+                        style: TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          color: Colors.grey,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],

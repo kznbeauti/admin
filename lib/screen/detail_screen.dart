@@ -24,6 +24,41 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: detailTextBackgroundColor,
       appBar: AppBar(
+        actions: [Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: ValueListenableBuilder(
+            valueListenable:
+            Hive.box<HiveItem>(boxName).listenable(),
+            builder: (context, Box<HiveItem> box, widget) {
+              final currentObj =
+              box.get(currentProduct!.id);
+
+              if (!(currentObj == null)) {
+                return IconButton(
+                    onPressed: () {
+                      box.delete(currentObj.id);
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.solidHeart,
+                      color: Colors.red,
+                      size: 25,
+                    ));
+              }
+              return IconButton(
+                  onPressed: () {
+                    box.put(
+                        currentProduct.id,
+                        controller.changeHiveItem(
+                            currentProduct!));
+                  },
+                  icon: Icon(
+                    Icons.favorite_outline,
+                    color: Colors.red,
+                    size: 25,
+                  ));
+            },
+          ),
+        ),],
         iconTheme: const IconThemeData(color: Colors.black),
         elevation: 0,
         backgroundColor: Colors.white,
@@ -65,7 +100,7 @@ class DetailScreen extends StatelessWidget {
                     ),
                   ],
                   options: CarouselOptions(
-                    height: 400,
+                    height: 250,
                     viewportFraction: 0.8,
                     initialPage: 0,
                     enableInfiniteScroll: true,
@@ -100,57 +135,69 @@ class DetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+
+                      Text(
+                        "Product Name",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
                       //Star
-                      Row(
-                        children: List.generate(
-                          5,
-                              (index) => Icon(
-                            Icons.star,
-                            size: 20,
-                            color: index <= (currentProduct.love ?? 0)
-                                ? homeIndicatorColor
-                                : Colors.grey,
-                          ),
-                        ),
+                      Text(
+                        currentProduct!.name,
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       //Favourite Icon
-                      ValueListenableBuilder(
-                        valueListenable:
-                        Hive.box<HiveItem>(boxName).listenable(),
-                        builder: (context, Box<HiveItem> box, widget) {
-                          final currentObj =
-                          box.get(currentProduct.id);
 
-                          if (!(currentObj == null)) {
-                            return IconButton(
-                                onPressed: () {
-                                  box.delete(currentObj.id);
-                                },
-                                icon: Icon(
-                                  FontAwesomeIcons.solidHeart,
-                                  color: Colors.red,
-                                  size: 25,
-                                ));
-                          }
-                          return IconButton(
-                              onPressed: () {
-                                box.put(
-                                    currentProduct.id,
-                                    controller.changeHiveItem(
-                                        currentProduct));
-                              },
-                              icon: Icon(
-                                Icons.favorite_outline,
-                                color: Colors.red,
-                                size: 25,
-                              ));
-                        },
+                    ]),
+                SizedBox(
+                  height: 20,
+                ),
+
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Text(
+                        "Brand Name",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                       ),
+                      //Star
+                      Text(
+                        currentProduct?.brandName??'',
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      //Favourite Icon
+
+                    ]),
+                SizedBox(
+                  height: 20,
+                ),
+
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Text(
+                        "Category",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      //Star
+                      Text(
+                        currentProduct!.category,
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      //Favourite Icon
+
                     ]),
                 SizedBox(
                   height: 20,
@@ -159,7 +206,7 @@ class DetailScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "တစ်ထည်ဈေး (Retail) :",
+                      "Price",
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -181,20 +228,13 @@ class DetailScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Brand",
+                      "Discount Price",
                       style: TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
                     ),
-                    Text(
-                      "Delevery Time",
-                      style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
+
                     Text(
                       (currentProduct.discountPrice ?? 0) > 0 ?
                       "${currentProduct.discountPrice} Kyats" : "no discount price",
@@ -242,6 +282,9 @@ class DetailScreen extends StatelessWidget {
                           )
                         ],
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Column(
                         children: [
                           Text(
@@ -255,6 +298,7 @@ class DetailScreen extends StatelessWidget {
                           SizedBox(
                             height: 5,
                           ),
+
                           Text(
                             "In Stock",
                             style: TextStyle(
@@ -265,6 +309,11 @@ class DetailScreen extends StatelessWidget {
                           )
                         ],
                       ),
+
+                      SizedBox(
+                        width: 10,
+                      ),
+
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -281,7 +330,7 @@ class DetailScreen extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            "     09 7777 0 222 8",
+                            "  09 884 911 962",
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -333,12 +382,13 @@ class DetailScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "🏠 Shop - 1  ( Thanlyin )",
+                      "🏠 Shop Address",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -349,34 +399,7 @@ class DetailScreen extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      'အမှတ် 116 ၊ သတိပဌာန်လမ်း ၊ မြို့မတောင်ရပ်ကွက် ၊ သန်လျင်မြို့နယ် ၊ ရန်ကုန်မြို့။',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "🏠 Shop - 2  ( Dawbon )",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      'အမှတ် 192 ၊ ယမုံနာလမ်း ၊ ဇေယျာသီရိရပ်ကွက်, ဒေါပုံမြို့နယ် ။ (မာန်ပြေကားဂိတ်နားမရောက်ခင်...ဇေယျာသီရိ ၈ လမ်းထိပ်)',
+                      'ဥက္ကာလမ်း ၊ ဥက္ကာ ၅x၆ လမ်း ၊ မြောက်ဥက္ကလာပမြို့နယ် ၊ ရန်ကုန်မြို့။',
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,

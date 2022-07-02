@@ -1,4 +1,6 @@
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -50,42 +52,47 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         builder: (controller) {
           return Theme(
             data: ThemeData(
-                primarySwatch: Colors.orange,
+                primarySwatch: Colours.goldenRod,
                 colorScheme: ColorScheme.light(
-                  primary: Colors.orange,
-                  secondary: Colors.orange,
+                  primary: Colours.goldenRod,
+                  secondary: Colours.goldenRod,
                 )),
             child: Stepper(
               currentStep: controller.checkOutStep.value,
               controlsBuilder: (context, controlDetails) {
                 return controller.checkOutStep.value == 1
-                    ? ElevatedButton(
-                        onPressed: () async {
-                          //TODO: TOSUBMIT ORDER
-                          if ((controller.paymentOptions !=
-                                  PaymentOptions.None) &&
-                              (controller.paymentOptions ==
-                                  PaymentOptions.CashOnDelivery)) {
-                            //First we need to set Image to null
-                            controller.setBankSlipImage('');
-                            await controller.proceedToPay();
-                          } else if ((controller.paymentOptions !=
-                                  PaymentOptions.None) &&
-                              (controller.paymentOptions ==
-                                  PaymentOptions.PrePay) &&
-                              (controller.bankSlipImage.isNotEmpty)) {
-                            //First we need to set Image to null
-                            await controller.proceedToPay();
-                          } else {
-                            debugPrint("Noting do....................");
-                          }
-                        },
-                        child: Center(
-                          child: Text(
-                            "Submit Order",
+                    ? Container(
+                  width: double.infinity,
+                  height: 50,
+                  margin: const EdgeInsets.only(top: 20, right: 40, left: 40),
+                      child: ElevatedButton(
+                          onPressed: () async {
+                            //TODO: TOSUBMIT ORDER
+                            if ((controller.paymentOptions !=
+                                    PaymentOptions.None) &&
+                                (controller.paymentOptions ==
+                                    PaymentOptions.CashOnDelivery)) {
+                              //First we need to set Image to null
+                              controller.setBankSlipImage('');
+                              await controller.proceedToPay();
+                            } else if ((controller.paymentOptions !=
+                                    PaymentOptions.None) &&
+                                (controller.paymentOptions ==
+                                    PaymentOptions.PrePay) &&
+                                (controller.bankSlipImage.isNotEmpty)) {
+                              //First we need to set Image to null
+                              await controller.proceedToPay();
+                            } else {
+                              debugPrint("Noting do....................");
+                            }
+                          },
+                          child: Center(
+                            child: Text(
+                              "အတည်ပြု",
+                            ),
                           ),
                         ),
-                      )
+                    )
                     : SizedBox(height: 0, width: 0);
               },
               onStepTapped: (index) => controller.changeStepIndex(index),
@@ -96,13 +103,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   state: controller.checkOutStep.value > 0
                       ? StepState.complete
                       : StepState.indexed,
-                  title: Text("Delivery details"),
+                  title: Text("Delivery အချက်အလက်ဖြည့်"),
                   content: FormWidget(),
                 ),
                 Step(
                   isActive: controller.checkOutStep >= 1,
                   state: StepState.indexed,
-                  title: Text("Pay Method"),
+                  title: Text("အတည်ပြု"),
                   content: controller.paymentOptions == PaymentOptions.PrePay
                       ? prePayWidget(context)
                       : SizedBox(height: 0, width: 0),
@@ -121,51 +128,149 @@ Widget prePayWidget(BuildContext context) {
   final size = MediaQuery.of(context).size;
   HomeController controller = Get.find();
   return SizedBox(
-    height: 100,
-    child: SingleChildScrollView(
-        child: Column(children: [
-      //Button
-      OutlinedButton(
-        style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.black, width: 2),
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-        )),
-        onPressed: () => getBankSlip(controller),
-        child: Text("Choose KBZ / AYA / WAVE Screenshot"),
-      ),
-      //Image String
-      Obx(() => SizedBox(
-            height: 50,
-            width: size.width,
-            child: Row(children: [
-              SizedBox(
-                width: size.width * 0.7,
-                child: Text(
-                  controller.bankSlipImage.value,
-                  overflow: TextOverflow.ellipsis,
+    height: 280,
+    child: ListView(
+      children: [
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                Image.asset(
+                  "assets/kpay.png",
+                  width: 112,
+                  height: 63,
+                ),
+                SizedBox(height: 5),
+              ],
+            ),
+            SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  " Kaung Sett Win",
                   style: TextStyle(
-                    color: Colors.black,
+                    fontSize: 16,
                   ),
                 ),
-              ),
-              controller.bankSlipImage.value.isNotEmpty
-                  ? SizedBox(
-                      width: 50,
-                      child: IconButton(
-                        onPressed: () => controller.setBankSlipImage(""),
-                        icon: Icon(
-                          FontAwesomeIcons.times,
-                          color: Colors.black,
-                        ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.black,
+                    textStyle: const TextStyle(fontSize: 16),
+                  ),
+                  onPressed: () {
+                    Clipboard.setData(new ClipboardData(text: "09764397743"))
+                        .then((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              "KBZ Pay Account နံပါတ် 09 764 39 7743 ကို Copy ကူး လိုက်ပါပြီ")));
+                    });
+                  },
+                  child: const Text('09 764 39 7743'),
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                Image.asset(
+                  "assets/kbz.png",
+                  width: 112,
+                  height: 63,
+                ),
+                SizedBox(height: 5),
+              ],
+            ),
+            SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  " U Kaung Sett Win",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.black,
+                    textStyle: const TextStyle(fontSize: 16),
+                  ),
+                  onPressed: () {
+                    Clipboard.setData(
+                        new ClipboardData(text: "28630128600633901"))
+                        .then((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              "KBZ Bank Account နံပါတ် 286 301 286 0063 3901 ကို Copy ကူး လိုက်ပါပြီ")));
+                    });
+                  },
+                  child: const Text('286 301 286 0063 3901'),
+                ),
+              ],
+            ),
+          ],
+        ),
+
+        SizedBox(height: 20),
+        Column(
+          children: [
+            //Button
+            OutlinedButton(
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.black, width: 2),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  )),
+              onPressed: () => getBankSlip(controller),
+              child: Text("KBZ Pay / KBZ / AYA Screenshot"),
+            ),
+            //Image String
+            Obx(
+                  () => SizedBox(
+                height: 50,
+                width: size.width,
+                child: Row(children: [
+                  SizedBox(
+                    width: size.width * 0.7,
+                    child: Text(
+                      controller.bankSlipImage.value,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.black,
                       ),
-                    )
-                  : SizedBox(height: 0, width: 0),
-            ]),
-          ))
-    ])),
+                    ),
+                  ),
+                  controller.bankSlipImage.value.isNotEmpty
+                      ? SizedBox(
+                    width: 50,
+                    child: IconButton(
+                      onPressed: () => controller.setBankSlipImage(""),
+                      icon: Icon(
+                        FontAwesomeIcons.times,
+                        color: Colors.black,
+                      ),
+                    ),
+                  )
+                      : SizedBox(height: 0, width: 0),
+                ]),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
   );
 }
 
@@ -287,7 +392,7 @@ class _FormWidgetState extends State<FormWidget> {
             Container(
               width: double.infinity,
               height: 50,
-              margin: const EdgeInsets.only(top: 20, right: 20, left: 20),
+              margin: const EdgeInsets.only(top: 20, right: 40, left: 40),
               child: ElevatedButton(
                 style: buttonStyle,
                 onPressed: () async {
@@ -308,7 +413,10 @@ class _FormWidgetState extends State<FormWidget> {
                     Get.snackbar("လူကြီးမင်း Order တင်ခြင်း", 'အောင်မြင်ပါသည်');*/
                   }
                 },
-                child: Text('Save'),
+                child: Text('သိမ်းထားမည်',
+                style: TextStyle(
+                  fontSize: 16
+                ),),
               ),
             )
           ],

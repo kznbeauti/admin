@@ -29,15 +29,15 @@ class _ShopState extends State<Shop>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          'Shop',
-          style: TextStyle(fontSize: 20, color: Colors.black),
-        ),
-        centerTitle: true,
-        shadowColor: Colors.transparent,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   title: Text(
+      //     'Shop',
+      //     style: TextStyle(fontSize: 20, color: Colors.black),
+      //   ),
+      //   centerTitle: true,
+      //   shadowColor: Colors.transparent,
+      // ),
       body: CardWidget(),
     );
   }
@@ -71,6 +71,9 @@ class CardWidget extends StatelessWidget {
         itemCount: _controller.categories.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
+          childAspectRatio: MediaQuery.of(context).size.width /
+              (MediaQuery.of(context).size.height / 3),
+
           // crossAxisSpacing: 10
         ),
         itemBuilder: (context, index) {
@@ -86,7 +89,7 @@ class CardWidget extends StatelessWidget {
                                                   Get.toNamed(viewAllUrl);
             },
             child: Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.only(left: 5,right: 5),
               child: Card(
                 elevation: 10,
                 color: Colors.white,
@@ -98,17 +101,22 @@ class CardWidget extends StatelessWidget {
                     children: [
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20, top: 20),
-                              child: Text(
-                                cate.name,
-                                style: TextStyle(color: Colors.black, fontSize: 20),
+                        child: SizedBox(
+                          height: 50,
+
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20, top: 10),
+
+                                child: Text(
+                                  cate.name,
+                                  style: TextStyle(color: Colors.black, fontSize: 18),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Container(
@@ -116,12 +124,12 @@ class CardWidget extends StatelessWidget {
                           padding: EdgeInsets.only(right:10),
                           child: Column(
                             children: [
-                            cate.image!.isNotEmpty ? 
+                            cate.image!.isNotEmpty ?
                             CachedNetworkImage(
                             imageUrl: cate.image!,
-                            width: 90,
-                            height: 100,
-                            fit: BoxFit.cover,
+                            width: 70,
+                            height: 70,
+                            fit: BoxFit.fitWidth,
                           ) : const SizedBox(),
                             ],
                           ))

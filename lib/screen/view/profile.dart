@@ -1,3 +1,4 @@
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kozarni_ecome/controller/home_controller.dart';
@@ -44,7 +45,7 @@ class ProfileView extends StatelessWidget {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(homeIndicatorColor),
+                          MaterialStateProperty.all(Colours.goldenRod),
                     ),
                     onPressed: controller.login,
                     child: Text(
@@ -71,7 +72,7 @@ class _LoginUser extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            height: 200,
+            height: 220,
             padding: EdgeInsets.only(left: 20, right: 20),
             margin: EdgeInsets.only(top: 20),
             child: Card(
@@ -96,17 +97,19 @@ class _LoginUser extends StatelessWidget {
                       //--I didn't change it,TODO: need to change emailAddress to phone number
                       //--instance variable of AuthUser Object
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
+
+                  SizedBox(height: 10,),
                   //-----Point For Admin To Test On Their Own----//
                   Obx(
                     () => Text(
                       "Your points: ${_controller.currentUser.value?.points ?? 0}",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -125,7 +128,7 @@ class _LoginUser extends StatelessWidget {
                   "Logout",
                   style: TextStyle(
                     fontSize: 16,
-                    color: homeIndicatorColor,
+                    color: Colours.goldenRod,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

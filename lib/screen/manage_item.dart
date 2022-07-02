@@ -39,10 +39,12 @@ class _ManageItemState extends State<ManageItem> {
         title: Text(
           "DELUX BEAUTI",
           style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: appBarTitleColor,
-              wordSpacing: 1
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.orangeAccent,
+            // fontStyle: FontStyle.italic,
+            wordSpacing: 2,
+            letterSpacing: 3,
           ),
         ),
         elevation: 0,

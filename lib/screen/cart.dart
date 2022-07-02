@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -301,7 +302,7 @@ class CartView extends StatelessWidget {
             margin: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(homeIndicatorColor),
+                backgroundColor: MaterialStateProperty.all(Colours.goldenRod),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
               onPressed: () {

@@ -1,3 +1,4 @@
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -18,12 +19,12 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget{
         title: Text(
           "DELUX BEAUTI",
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.red,
+            color: Colours.goldenRod,
             // fontStyle: FontStyle.italic,
             wordSpacing: 2,
-            letterSpacing: 1,
+            letterSpacing: 3,
           ),
         ),
         // centerTitle: true,
@@ -71,7 +72,7 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget{
               ),
               onPressed: () async {
                 try {
-                  await launch('https://m.me/myachoonagar');
+                  await launch('https://m.me/deluxbeauti');
                 } catch (e) {
                   print(e);
                 }
@@ -87,35 +88,6 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget{
           SizedBox(
             width: 20,
           ),
-
-          // SizedBox(
-          //   width: 45,
-          //   child: ElevatedButton(
-          //     style: ButtonStyle(
-          //       alignment: Alignment.center,
-          //       backgroundColor: MaterialStateProperty.all(Colors.white),
-          //       elevation: MaterialStateProperty.resolveWith<double>(
-          //         // As you said you dont need elevation. I'm returning 0 in both case
-          //             (Set<MaterialState> states) {
-          //           if (states.contains(MaterialState.disabled)) {
-          //             return 0;
-          //           }
-          //           return 0; // Defer to the widget's default.
-          //         },
-          //       ),
-          //     ),
-          //     onPressed: ()  {
-          //       Get.toNamed(cartUrl);
-          //     },
-          //     child: FaIcon(
-          //       FontAwesomeIcons.shoppingBasket,
-          //       color: Colors.black,
-          //       size: 23,
-          //     ),
-          //   ),
-          // ),
-
-
         ],
       );
   }

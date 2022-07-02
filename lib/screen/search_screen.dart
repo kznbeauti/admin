@@ -88,7 +88,7 @@ class SearchScreen extends StatelessWidget {
             ),
             onPressed: () async {
               try {
-                await launch('https://m.me/myachoonagar');
+                await launch('https://m.me/deluxbeauti');
               } catch (e) {
                 print(e);
               }
@@ -207,7 +207,7 @@ class SearchScreen extends StatelessWidget {
               )
             : Center(
                 child: Text(
-                  "လိုချင်တဲ့ဖိနပ်အမည်ကို ရှာဖွေနိုင်ပါသည်",
+                  "လိုချင်တဲ့ Product အမည်ကို ရှာဖွေနိုင်ပါသည်",
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,

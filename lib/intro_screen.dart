@@ -9,16 +9,20 @@ class OnBoardingPage extends StatelessWidget {
       pages: [
         PageViewModel(
           title: "",
-          body: '''မြန်မာဖိနပ် နှင့် နိုင်ငံခြားဖိနပ်အမျိုးမျိုး လက်ကားအရောင်းဆိုင်''',
+          body: '''Delux Beauti''',
           image: buildImage('assets/logo.png'),
           decoration: getPageDecoration(),
         ),
 
         PageViewModel(
           title: "",
-          body: '''❤ မြခြူးမိသားစုမှ သူဌေးလောင်းများကို 
+          body: '''❤ Authentic Korea, 
           
-          ဖိတ်ခေါ်နေပါတယ် ❤️''',
+USA and UK products များကို 
+          
+ယုံကြည်စိတ်ချစွာ 
+
+ဝယ်ယူအားပေးနိုင်ပါတယ်ရှင် ❤️''',
           image: buildImage('assets/logo.png'),
           decoration: getPageDecoration(),
         ),
@@ -26,27 +30,22 @@ class OnBoardingPage extends StatelessWidget {
           title: '',
           body: '''🏠 ဆိုင်လိပ်စာလေးကတော့….
           
-အမှတ် ၂၁၇ - ၂၃၆ ၊ ၊ ၂၉လမ်း အထက် ၊ 
-ပန်းဘဲတန်းမြို့နယ်၊ ရန်ကုန်မြို့။''',
+ဥက္ကာလမ်း ၊ ဥက္ကာ ၅x၆ လမ်း ၊ 
+မြောက်ဥက္ကလာပမြို့နယ် ၊ ရန်ကုန်မြို့။''',
           image: buildImage('assets/logo.png'),
           decoration: getPageDecoration(),
         ),
         PageViewModel(
           title: "",
-          body: '''☎ ဆက်သွယ်ရန် 
-     ဖုန်းနံပါတ်လေးတွေကတော့
+          body: '''☎ ဆက်သွယ်ရန် ဖုန်းနံပါတ်လေးကတော့
           
-09 265 700 006
-
-09 796 700 006
-
-09 952 700 006''',
+  09 884 911 962''',
           image: buildImage('assets/logo.png'),
           decoration: getPageDecoration(),
         ),
         PageViewModel(
           title: '',
-          body: ''' ❝  အခုလိုမျိုး ရွေးချယ်စရာတွေအများကြီးရှိတဲ့ အထဲကမှ မင်မင်တို့ရဲ့ "မြခြူး" တံဆိပ်ကို ယုံယုံကြည်ကြည်နဲ့ ရွေးချယ်ပေးခဲ့လို့ ကျေးဇူးအထူးတင်ပါတယ် ❞ ''',
+          body: ''' ❝  အခုလိုမျိုး ရွေးချယ်စရာတွေအများကြီးရှိတဲ့ အထဲကမှ မင်မင်တို့ရဲ့ " Delux Beauti " တံဆိပ်ကို ယုံယုံကြည်ကြည်နဲ့ ရွေးချယ်ပေးခဲ့လို့ ကျေးဇူးအထူးတင်ပါတယ် ❞ ''',
           footer: Padding(
             padding: const EdgeInsets.only(top: 0),
             child: ButtonWidget(

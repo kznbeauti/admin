@@ -1,3 +1,4 @@
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -43,11 +44,11 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
         backgroundColor: appBarColor,
         elevation: 0,
         title: Text(
-          "မြခြူး Mya Choo",
+          "DELUX BEAUTI",
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.red,
+            color: Colours.goldenRod,
             wordSpacing: 2,
             letterSpacing: 2,
           ),
@@ -97,7 +98,7 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
               ),
               onPressed: () async {
                 try {
-                  await launch('https://m.me/myachoonagar');
+                  await launch('https://m.me/deluxbeauti');
                 } catch (e) {
                   print(e);
                 }
@@ -134,7 +135,7 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
             const SizedBox(height: 10,),
             //Filter & Sort
             SizedBox(
-              height: 40,
+              height: 35,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -145,7 +146,7 @@ class _ViewAllScreenState extends State<ViewAllScreen> {
                       return InkWell(
                         onTap: () => _viewAllController.refreshViewAll(),
                         child: CircleAvatar(
-                          radius: 23,
+                          radius: 25,
                           backgroundColor: isRefresh ? Colors.black : Colors.grey.shade300,
                           child: Icon(FontAwesomeIcons.slidersH,size: 20, color:isRefresh ? Colors.white : Colors.black87,),
                           ),

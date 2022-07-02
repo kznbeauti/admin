@@ -1,3 +1,4 @@
+import 'package:colours/colours.dart';
 import 'package:flutter/material.dart';
 
 const Color scaffoldBackground = Colors.white;
@@ -7,7 +8,7 @@ const Color homeIndicatorColor = Colors.orangeAccent;
 const Color detailBackgroundColor = Colors.white;
 const Color detailTextBackgroundColor = Colors.white;
 ButtonStyle buttonStyle = ButtonStyle(
-  backgroundColor: MaterialStateProperty.all(Colors.orangeAccent),
+  backgroundColor: MaterialStateProperty.all(Colours.goldenRod),
 );
 
 const String baseUrl = 'http://192.168.1.5:5000/api/v1/streaming/movie/';

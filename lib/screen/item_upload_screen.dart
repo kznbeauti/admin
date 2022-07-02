@@ -35,7 +35,15 @@ class _UploadItemState extends State<UploadItem> {
       appBar: AppBar(
         title: Text(
           "DELUX BEAUTI",
-          style: TextStyle(color: Colors.black, fontSize: 14)),
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.orangeAccent,
+            // fontStyle: FontStyle.italic,
+            wordSpacing: 2,
+            letterSpacing: 3,
+          ),
+        ),
         actions: [
           // if (!(homecontroller.editItem.value == null)) ...[
           //   Padding(
