@@ -49,7 +49,7 @@ class DetailScreen extends StatelessWidget {
                     box.put(
                         currentProduct.id,
                         controller.changeHiveItem(
-                            currentProduct!));
+                            currentProduct));
                   },
                   icon: Icon(
                     Icons.favorite_outline,
@@ -148,7 +148,7 @@ class DetailScreen extends StatelessWidget {
                       ),
                       //Star
                       Text(
-                        currentProduct!.name,
+                        currentProduct.name,
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                       ),
@@ -170,7 +170,7 @@ class DetailScreen extends StatelessWidget {
                       ),
                       //Star
                       Text(
-                        currentProduct?.brandName??'',
+                        currentProduct.brandName??'',
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                       ),
@@ -192,7 +192,7 @@ class DetailScreen extends StatelessWidget {
                       ),
                       //Star
                       Text(
-                        currentProduct!.category,
+                        currentProduct.category,
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                       ),

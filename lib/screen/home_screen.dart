@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:kozarni_ecome/screen/view/home.dart';
 import 'package:kozarni_ecome/widgets/bottom_nav.dart';
 import 'package:kozarni_ecome/widgets/home_appbar/home_app_bar.dart';
 
+import '../routes/routes.dart';
 import 'cart.dart';
 import 'view/profile.dart';
 
@@ -31,69 +33,142 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  FlutterLocalNotificationsPlugin? fltNotification;
+  // FirebaseMessaging messaging = FirebaseMessaging.instance;
+  // FlutterLocalNotificationsPlugin? fltNotification;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    notitficationPermission();
-    initMessaging();
+    setUpForegroundNotification();
+    // notitficationPermission();
+    // initMessaging();
   }
-
-  void notitficationPermission() async {
-    await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-  }
-
-  void initMessaging() async {
-    var androiInit = AndroidInitializationSettings('@mipmap/ic_launcher');
-
-    var iosInit = IOSInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-    );
-
-    var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
-
-    fltNotification = FlutterLocalNotificationsPlugin();
-
-    fltNotification!.initialize(initSetting);
-
-    if (messaging != null) {
-      print('vvvvvvv');
+  selectNotification(String? payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: $payload');
     }
+    await Get.toNamed(purchaseScreen);
+}
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      showNotification(message);
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {});
-  }
-
-  void showNotification(RemoteMessage message) async {
-    var androidDetails = AndroidNotificationDetails(
-      '1',
-      message.notification!.title ?? '',
-      icon: '@mipmap/ic_launcher',
-      color: Color(0xFF0f90f3),
+  void onDidReceiveLocalNotification(
+      int id, String? title, String? body, String? payload) async {
+    // display a dialog with the notification details, tap ok to go to another page
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(title ?? ""),
+        content: Text(body ?? ""),
+        actions: [
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: Text('Ok'),
+            onPressed: () async {
+              Navigator.of(context, rootNavigator: true).pop();
+              await Get.toNamed(payload!);
+            },
+          )
+        ],
+      ),
     );
-    var iosDetails = IOSNotificationDetails();
-    var generalNotificationDetails =
-        NotificationDetails(android: androidDetails, iOS: iosDetails);
-    await fltNotification!.show(0, message.notification!.title ?? '',
-        message.notification!.body ?? '', generalNotificationDetails,
-        payload: 'Notification');
   }
+
+  Future<void> setUpForegroundNotification() async {
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings("@mipmap/ic_launcher");
+    final IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings(
+            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    //Initialization Setting
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
+    //Initialization
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: selectNotification);
+    
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'Channel ID: 1',
+      'your channel name',
+      channelDescription: 'your channel description',
+      importance: Importance.max,
+      priority: Priority.high,
+      sound: RawResourceAndroidNotificationSound('noti'),
+      ticker: 'ticker',
+    );
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: IOSNotificationDetails(sound: "noti.mp3"));
+    //LIsten Notification
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      final noti = message.notification!;
+      await flutterLocalNotificationsPlugin.show(
+          0, //ID
+          noti.title,
+          noti.body,
+          platformChannelSpecifics,
+          payload: message.data["route"]);
+      debugPrint("**********Push Reach******");
+    });
+  }
+
+
+  // void notitficationPermission() async {
+  //   await messaging.requestPermission(
+  //     alert: true,
+  //     announcement: false,
+  //     badge: true,
+  //     carPlay: false,
+  //     criticalAlert: false,
+  //     provisional: false,
+  //     sound: true,
+  //   );
+  // }
+
+  // void initMessaging() async {
+  //   var androiInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  //   var iosInit = IOSInitializationSettings(
+  //     requestAlertPermission: true,
+  //     requestBadgePermission: true,
+  //     requestSoundPermission: true,
+  //   );
+
+  //   var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
+
+  //   fltNotification = FlutterLocalNotificationsPlugin();
+
+  //   fltNotification!.initialize(initSetting);
+
+  //   if (messaging != null) {
+  //     print('vvvvvvv');
+  //   }
+
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //     showNotification(message);
+  //   });
+
+  //   FirebaseMessaging.onMessageOpenedApp.listen((event) {});
+  // }
+
+  // void showNotification(RemoteMessage message) async {
+  //   var androidDetails = AndroidNotificationDetails(
+  //     '1',
+  //     message.notification!.title ?? '',
+  //     icon: '@mipmap/ic_launcher',
+  //     color: Color(0xFF0f90f3),
+  //   );
+  //   var iosDetails = IOSNotificationDetails();
+  //   var generalNotificationDetails =
+  //       NotificationDetails(android: androidDetails, iOS: iosDetails);
+  //   await fltNotification!.show(0, message.notification!.title ?? '',
+  //       message.notification!.body ?? '', generalNotificationDetails,
+  //       payload: 'Notification');
+  // }
 
   @override
   Widget build(BuildContext context) {
